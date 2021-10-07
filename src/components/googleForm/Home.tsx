@@ -1,5 +1,5 @@
 import AddCircleIcon from "@mui/icons-material/AddCircleOutline";
-import { Button, IconButton, TextField, Tooltip } from "@mui/material";
+import { Button, IconButton, TextField } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import { useState } from "react";
 import { Choice, FeedbackQuestion } from "../models/feedback";
@@ -38,21 +38,25 @@ const useStyles = makeStyles(() =>
       alignItems: "flex-start",
     },
     add: {
-      position:"fixed",
-      bottom:"5rem",
-      right:"5rem",
+      position: "fixed",
+      bottom: "3rem",
+      right: "3rem",
       boxSizing: "border-box",
       width: "fit-content",
-      background: "#fff",
+      background: "#1976d2",
       borderRadius: "5px",
+      "& svg": {
+        color: "#fff",
+      },
     },
   })
 );
 
 export default function Home() {
   const classes = useStyles();
-  const [title,setTitle]=useState("");
-  const [description,setDescription]=useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [activeQuestion, setActiveQuestion] = useState<number>(-1);
   const [questions, setQuestions] = useState<FeedbackQuestion[]>([
     {
       question: "",
@@ -171,23 +175,31 @@ export default function Home() {
     setQuestions(questionList);
   };
 
-  const handleSubmit=(event:any)=>{
+  const handleSubmit = (event: any) => {
     event.preventDefault();
-    console.log("title",title);
-    console.log("Description",description);
-    console.log("Feedback questions",questions);
-  } 
+    console.log("title", title);
+    console.log("Description", description);
+    console.log("Feedback questions", questions);
+  };
 
   return (
     <div className={classes.mainContainer}>
-      <form className={classes.root} onSubmit={handleSubmit} >
-        <div className={classes.header}>
+      <form className={classes.root} onSubmit={handleSubmit}>
+        <div
+          className={classes.header}
+          onClick={() => setActiveQuestion(-1)}
+          style={{
+            width: "100%",
+            boxSizing: "border-box",
+            borderLeft: activeQuestion === -1 ? "10px solid #1976d2" : "",
+          }}
+        >
           <TextField
             variant="standard"
             placeholder="Feedback Title "
             fullWidth
             value={title}
-            onChange={(e)=>setTitle(e.target.value)}
+            onChange={(e) => setTitle(e.target.value)}
             InputProps={{
               disableUnderline: true,
               style: {
@@ -202,7 +214,7 @@ export default function Home() {
             placeholder="Feedback description "
             fullWidth
             value={description}
-            onChange={(e)=>setDescription(e.target.value)}
+            onChange={(e) => setDescription(e.target.value)}
             InputProps={{
               disableUnderline: true,
               style: { fontSize: "15px", borderBottom: "1px solid #d9d9d9" },
@@ -212,28 +224,33 @@ export default function Home() {
         <div>
           {questions.map((question, index) => {
             return (
-              <Questions
-                key={index}
-                question={question}
-                handleChangeQuestion={handleChangeQuestion}
-                handleAddQuestion={handleAddQuestion}
-                handleDeleteQuestion={handleDeleteQuestion}
-                handleAddOption={handleAddOption}
-                handleChangeOption={handleChangeOption}
-                handleDeleteOption={handleDeleteOption}
-                handleChangeQuestionType={handleChangeQuestionType}
-                handleChangeQuestionRequired={handleChangeQuestionRequired}
-              />
+              <div onClick={() => setActiveQuestion(index + 1)}>
+                <Questions
+                  key={index}
+                  isActive={activeQuestion === index + 1}
+                  question={question}
+                  handleChangeQuestion={handleChangeQuestion}
+                  handleAddQuestion={handleAddQuestion}
+                  handleDeleteQuestion={handleDeleteQuestion}
+                  handleAddOption={handleAddOption}
+                  handleChangeOption={handleChangeOption}
+                  handleDeleteOption={handleDeleteOption}
+                  handleChangeQuestionType={handleChangeQuestionType}
+                  handleChangeQuestionRequired={handleChangeQuestionRequired}
+                />
+              </div>
             );
           })}
         </div>
         <div className={classes.add}>
-            <IconButton onClick={handleAddQuestion}>
-              <AddCircleIcon />
-            </IconButton>
+          <IconButton onClick={handleAddQuestion}>
+            <AddCircleIcon />
+          </IconButton>
         </div>
-        <div style={{width:"100%", textAlign:"left"}} >
-            <Button variant="contained" color="primary" type="submit" >Submit</Button>
+        <div style={{ width: "100%", textAlign: "left" }}>
+          <Button variant="contained" color="primary" type="submit">
+            Submit
+          </Button>
         </div>
       </form>
     </div>

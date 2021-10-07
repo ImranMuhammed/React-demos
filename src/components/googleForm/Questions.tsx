@@ -69,6 +69,7 @@ const useStyles = makeStyles(() =>
 );
 
 interface Props {
+  isActive:boolean
   question: FeedbackQuestion;
   handleChangeQuestion: (event: any, questionId: string) => void;
   handleAddQuestion: (event: any) => void;
@@ -89,6 +90,7 @@ interface Props {
 }
 
 export default function Questions({
+  isActive,
   question,
   handleDeleteOption,
   handleAddOption,
@@ -101,7 +103,7 @@ export default function Questions({
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{borderLeft:isActive?"10px solid #1976d2":"none"}} >
       <div className={classes.container}>
         <div className={classes.question}>
           <TextField
@@ -190,6 +192,7 @@ export default function Questions({
                 color: "#00f",
                 cursor: "pointer",
                 marginTop: "0.5rem",
+                width:"fit-content",
               }}
               onClick={(e) => handleAddOption(e, question.id)}
             >
