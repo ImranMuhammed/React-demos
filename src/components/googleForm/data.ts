@@ -1,0 +1,1 @@
+export enum Question_Type{MCQ="Multiple choice",CHECK_BOX="Checkboxes",SHORT_ANSWER="Short answer" }
