@@ -26,7 +26,7 @@ export interface FeedbackQuestion{
     question:string;
     type:string;
     options?:Choice[]
-    answer:string | number | string[] | number[];
+    answer:string | string[];
     required:boolean;
 }
 

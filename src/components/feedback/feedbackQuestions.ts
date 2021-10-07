@@ -1,5 +1,5 @@
-import { FeedbackQuestion } from "../models/feedback";
 import { Question_Type } from "../googleForm/data";
+import { FeedbackQuestion } from "../models/feedback";
 
 export const feedbackQuestions: FeedbackQuestion[] = [
   {
@@ -12,7 +12,7 @@ export const feedbackQuestions: FeedbackQuestion[] = [
       { id: "11113", value: "Disagree" },
     ],
     answer: "",
-    required: true,
+    required: false,
   },
   {
     id: "1111111112",
@@ -24,8 +24,9 @@ export const feedbackQuestions: FeedbackQuestion[] = [
       { id: "11123", value: "Disagree" },
     ],
     answer: "",
-    required: false,
+    required: true,
   },
+
   {
     id: "1111111113",
     question: "Social medias you are active on?",
@@ -35,7 +36,7 @@ export const feedbackQuestions: FeedbackQuestion[] = [
       { id: "11132", value: "Twitter" },
       { id: "11133", value: "Instagram" },
     ],
-    answer: [""],
+    answer: [],
     required: true,
   },
   {
@@ -47,7 +48,7 @@ export const feedbackQuestions: FeedbackQuestion[] = [
       { id: "11142", value: "Twitter" },
       { id: "11143", value: "Instagram" },
     ],
-    answer: [""],
+    answer: [],
     required: false,
   },
   {
