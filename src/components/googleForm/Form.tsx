@@ -2,7 +2,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircleOutline";
 import { Button, IconButton, TextField } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import { useState } from "react";
-import { Choice, FeedbackQuestion } from "../models/feedback";
+import { Choice, Feedback, FeedbackQuestion } from "../models/feedback";
 import { Question_Type } from "./data";
 import Questions from "./Questions";
 
@@ -52,11 +52,11 @@ const useStyles = makeStyles(() =>
   })
 );
 
-export default function Home() {
+export default function Form() {
   const classes = useStyles();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [activeQuestion, setActiveQuestion] = useState<number>(-1);
+  const [activeQuestion, setActiveQuestion] = useState<number>(0);
   const [questions, setQuestions] = useState<FeedbackQuestion[]>([
     {
       question: "",
@@ -177,9 +177,15 @@ export default function Home() {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    console.log("title", title);
-    console.log("Description", description);
-    console.log("Feedback questions", questions);
+    const feedback: Feedback = {
+      title: title,
+      description: description,
+      feedback: questions,
+      created: new Date(),
+      updated: new Date(),
+      docId: "",
+    };
+    console.log("Feedback = ", feedback);
   };
 
   return (
@@ -187,17 +193,18 @@ export default function Home() {
       <form className={classes.root} onSubmit={handleSubmit}>
         <div
           className={classes.header}
-          onClick={() => setActiveQuestion(-1)}
+          onClick={() => setActiveQuestion(0)}
           style={{
             width: "100%",
             boxSizing: "border-box",
-            borderLeft: activeQuestion === -1 ? "10px solid #1976d2" : "",
+            borderLeft: activeQuestion === 0 ? "10px solid #1976d2" : "",
           }}
         >
           <TextField
             variant="standard"
             placeholder="Feedback Title "
             fullWidth
+            required
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             InputProps={{
@@ -213,6 +220,7 @@ export default function Home() {
             variant="standard"
             placeholder="Feedback description "
             fullWidth
+            required
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             InputProps={{

@@ -1,21 +1,14 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Home from './components/googleForm/Home';
-import { ThemeProvider, useTheme } from '@mui/material';
-
-
+import { ThemeProvider, useTheme } from "@mui/material";
+import "./App.css";
+import Form from "./components/googleForm/Form";
 
 function App() {
-  const theme=useTheme()
+  const theme = useTheme();
   return (
     <div className="App">
-      <ThemeProvider theme={theme} >
-      <Home />
+      <ThemeProvider theme={theme}>
+        <Form />
       </ThemeProvider>
-     
-
-       
     </div>
   );
 }
