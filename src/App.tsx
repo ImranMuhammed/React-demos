@@ -1,5 +1,6 @@
 import { ThemeProvider, useTheme } from "@mui/material";
 import "./App.css";
+import FeedbackForm from "./components/feedback/FeedbackForm";
 import Form from "./components/googleForm/Form";
 
 function App() {
@@ -7,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
-        <Form />
+        <FeedbackForm />
       </ThemeProvider>
     </div>
   );
