@@ -1,5 +1,5 @@
 import AddCircleIcon from "@mui/icons-material/AddCircleOutline";
-import { IconButton, TextField, Tooltip } from "@mui/material";
+import { Button, IconButton, TextField, Tooltip } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 import { useState } from "react";
 import { Choice, FeedbackQuestion } from "../models/feedback";
@@ -51,6 +51,8 @@ const useStyles = makeStyles(() =>
 
 export default function Home() {
   const classes = useStyles();
+  const [title,setTitle]=useState("");
+  const [description,setDescription]=useState("");
   const [questions, setQuestions] = useState<FeedbackQuestion[]>([
     {
       question: "",
@@ -169,14 +171,23 @@ export default function Home() {
     setQuestions(questionList);
   };
 
+  const handleSubmit=(event:any)=>{
+    event.preventDefault();
+    console.log("title",title);
+    console.log("Description",description);
+    console.log("Feedback questions",questions);
+  } 
+
   return (
     <div className={classes.mainContainer}>
-      <div className={classes.root}>
+      <form className={classes.root} onSubmit={handleSubmit} >
         <div className={classes.header}>
           <TextField
             variant="standard"
             placeholder="Feedback Title "
             fullWidth
+            value={title}
+            onChange={(e)=>setTitle(e.target.value)}
             InputProps={{
               disableUnderline: true,
               style: {
@@ -190,6 +201,8 @@ export default function Home() {
             variant="standard"
             placeholder="Feedback description "
             fullWidth
+            value={description}
+            onChange={(e)=>setDescription(e.target.value)}
             InputProps={{
               disableUnderline: true,
               style: { fontSize: "15px", borderBottom: "1px solid #d9d9d9" },
@@ -215,13 +228,14 @@ export default function Home() {
           })}
         </div>
         <div className={classes.add}>
-          <Tooltip title="Add Question">
             <IconButton onClick={handleAddQuestion}>
               <AddCircleIcon />
             </IconButton>
-          </Tooltip>
         </div>
-      </div>
+        <div style={{width:"100%", textAlign:"left"}} >
+            <Button variant="contained" color="primary" type="submit" >Submit</Button>
+        </div>
+      </form>
     </div>
   );
 }

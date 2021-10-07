@@ -23,6 +23,7 @@ import { Question_Type } from "./data";
 const useStyles = makeStyles(() =>
   createStyles({
     root: {
+      width: "100%",
       boxSizing: "border-box",
       borderRadius: "10px",
       padding: "1rem",
